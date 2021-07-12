@@ -51,7 +51,10 @@ namespace moveit
 {
 namespace core
 {
-const std::string LOGNAME = "robot_state";
+namespace
+{
+constexpr char LOGNAME[] = "robot_state";
+}  // namespace
 
 RobotState::RobotState(const RobotModelConstPtr& robot_model)
   : robot_model_(robot_model)
@@ -296,7 +299,7 @@ void RobotState::setToRandomPositions(const JointModelGroup* group, random_numbe
   updateMimicJoints(group);
 }
 
-void RobotState::setToRandomPositionsNearBy(const JointModelGroup* group, const RobotState& near,
+void RobotState::setToRandomPositionsNearBy(const JointModelGroup* group, const RobotState& seed,
                                             const std::vector<double>& distances)
 {
   // we do not make calls to RobotModel for random number generation because mimic joints
@@ -308,12 +311,12 @@ void RobotState::setToRandomPositionsNearBy(const JointModelGroup* group, const 
   {
     const int idx = joints[i]->getFirstVariableIndex();
     joints[i]->getVariableRandomPositionsNearBy(rng, position_ + joints[i]->getFirstVariableIndex(),
-                                                near.position_ + idx, distances[i]);
+                                                seed.position_ + idx, distances[i]);
   }
   updateMimicJoints(group);
 }
 
-void RobotState::setToRandomPositionsNearBy(const JointModelGroup* group, const RobotState& near, double distance)
+void RobotState::setToRandomPositionsNearBy(const JointModelGroup* group, const RobotState& seed, double distance)
 {
   // we do not make calls to RobotModel for random number generation because mimic joints
   // could trigger updates outside the state of the group itself
@@ -322,7 +325,7 @@ void RobotState::setToRandomPositionsNearBy(const JointModelGroup* group, const 
   for (const JointModel* joint : joints)
   {
     const int idx = joint->getFirstVariableIndex();
-    joint->getVariableRandomPositionsNearBy(rng, position_ + joint->getFirstVariableIndex(), near.position_ + idx,
+    joint->getVariableRandomPositionsNearBy(rng, position_ + joint->getFirstVariableIndex(), seed.position_ + idx,
                                             distance);
   }
   updateMimicJoints(group);
@@ -902,6 +905,7 @@ double RobotState::distance(const RobotState& other, const JointModelGroup* join
 
 void RobotState::interpolate(const RobotState& to, double t, RobotState& state) const
 {
+  moveit::core::checkInterpolationParamBounds(LOGNAME, t);
   robot_model_->interpolate(getVariablePositions(), to.getVariablePositions(), t, state.getVariablePositions());
 
   memset(state.dirty_joint_transforms_, 1, state.robot_model_->getJointModelCount() * sizeof(unsigned char));
@@ -910,6 +914,7 @@ void RobotState::interpolate(const RobotState& to, double t, RobotState& state) 
 
 void RobotState::interpolate(const RobotState& to, double t, RobotState& state, const JointModelGroup* joint_group) const
 {
+  moveit::core::checkInterpolationParamBounds(LOGNAME, t);
   const std::vector<const JointModel*>& jm = joint_group->getActiveJointModels();
   for (const JointModel* joint : jm)
   {

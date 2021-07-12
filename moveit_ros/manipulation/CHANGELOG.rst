@@ -2,6 +2,15 @@
 Changelog for package moveit_ros_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.5 (2021-05-23)
+------------------
+
+1.1.4 (2021-05-12)
+------------------
+
+1.1.3 (2021-04-29)
+------------------
+
 1.1.2 (2021-04-08)
 ------------------
 * Order PlaceLocations by quality during planning (`#2378 <https://github.com/ros-planning/moveit/issues/2378>`_)

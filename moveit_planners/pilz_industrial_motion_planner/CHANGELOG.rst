@@ -2,6 +2,19 @@
 Changelog for package pilz_industrial_motion_planner
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.5 (2021-05-23)
+------------------
+* Allow selecting planning pipeline in MotionSequenceAction (`#2657 <https://github.com/ros-planning/moveit/issues/2657>`_)
+* Contributors: Felix von Drigalski
+
+1.1.4 (2021-05-12)
+------------------
+
+1.1.3 (2021-04-29)
+------------------
+* Skip fixed joints when checking velocity limits (`#2610 <https://github.com/ros-planning/moveit/issues/2610>`_)
+* Contributors: Christian Landgraf
+
 1.1.2 (2021-04-08)
 ------------------
 * Fix formatting errors

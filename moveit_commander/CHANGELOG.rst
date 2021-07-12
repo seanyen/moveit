@@ -2,6 +2,20 @@
 Changelog for package moveit_commander
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.5 (2021-05-23)
+------------------
+* Allow selecting planning pipeline in MotionSequenceAction (`#2657 <https://github.com/ros-planning/moveit/issues/2657>`_)
+* Contributors: Felix von Drigalski
+
+1.1.4 (2021-05-12)
+------------------
+
+1.1.3 (2021-04-29)
+------------------
+* Add planning_pipeline_id setting to Python MGI (`#2622 <https://github.com/ros-planning/moveit/issues/2622>`_)
+* Add clear() to Python PSI, allow empty call to remove_attached_object (`#2609 <https://github.com/ros-planning/moveit/issues/2609>`_)
+* Contributors: Felix von Drigalski
+
 1.1.2 (2021-04-08)
 ------------------
 * Fix formatting errors
